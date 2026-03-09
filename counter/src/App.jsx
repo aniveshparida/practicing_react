@@ -5,22 +5,15 @@ import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
-   
- const handleIncrement=()=>{
- setCount(count+1);
- }
- const handleDecrement=()=>{
-  setCount(count-1);
- }
- const reset=()=>{
-  setCount(0);
- }
+   const [input,setInput] = useState('')
+  const handleChange=(e)=>{
+    setInput(e.target.value);
+    setCount(input.length);
+  }
   return (
     <div>
-      <h1>{count}</h1>
-      <button onClick={handleIncrement}>Increament</button>
-      <button onClick={handleDecrement} disabled={count===0}>Decreament</button>
-      <button onClick={reset}>Reset</button>
+       <input style={{color: count>100 ? 'red' : 'white'}} type="text" value={input} onChange={handleChange}/>
+       <h1>{count}</h1>
     </div>
   )
 }
