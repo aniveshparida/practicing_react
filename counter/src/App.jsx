@@ -4,18 +4,30 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import {Eye,EyeOff} from 'lucide-react'
 function App() {
-  const [password,setPassword]=useState('');
-  const [isVisible,setIsVisible]=useState(false);
+  const [inputValue,setInputValue]=useState('');
+  const[list,setList]=useState([]);
+  const [count,setCount]=useState(0);
   const handleChange=(e)=>{
-    setPassword(e.target.value);
+    setInputValue(e.target.value);
   }
   const handleClick=()=>{
-    setIsVisible(!isVisible);
+    const isDuplicate=list.some((item)=>item.value.toLowerCase()===inputValue.trim.toLowerCase())
+    if(!isDuplicate && inputValue.trim()!==''){
+    setList([...list,{id:count,value:inputValue}]);
+    setCount(count+1);
+    setInputValue('');
+    }
   }
   return (
     <div>
-     <input type={isVisible? 'text':'password'} value={password} onChange={handleChange}></input>
-     <button onClick={handleClick}>{!isVisible?<EyeOff size={20}/>:<Eye size={20}/>}</button>
+     <input type="text" value={inputValue} onChange={handleChange}/>
+     <button onClick={handleClick}>Add</button>
+     <ul>
+      {list.map((item)=>(
+        <li key={item.id}>{item.value}</li>
+      )
+      )}
+     </ul>
     </div>
   )
 }
