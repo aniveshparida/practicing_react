@@ -11,12 +11,15 @@ function App() {
     setInputValue(e.target.value);
   }
   const handleClick=()=>{
-    const isDuplicate=list.some((item)=>item.value.toLowerCase()===inputValue.trim.toLowerCase())
+    const isDuplicate=list.some((item)=>item.value.toLowerCase()===inputValue.trim().toLowerCase())
     if(!isDuplicate && inputValue.trim()!==''){
     setList([...list,{id:count,value:inputValue}]);
     setCount(count+1);
     setInputValue('');
     }
+  }
+  const handleDelete=(id)=>{
+    setList(list.filter((item)=>item.id!==id));
   }
   return (
     <div>
@@ -24,7 +27,9 @@ function App() {
      <button onClick={handleClick}>Add</button>
      <ul>
       {list.map((item)=>(
-        <li key={item.id}>{item.value}</li>
+        <li key={item.id}>{item.value}
+        <button onClick={()=>handleDelete(item.id)}>Delete</button>
+        </li>
       )
       )}
      </ul>
