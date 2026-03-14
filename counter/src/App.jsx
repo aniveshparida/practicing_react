@@ -13,7 +13,7 @@ function App() {
   const handleClick=()=>{
     const isDuplicate=list.some((item)=>item.value.toLowerCase()===inputValue.trim().toLowerCase())
     if(!isDuplicate && inputValue.trim()!==''){
-    setList([...list,{id:count,value:inputValue}]);
+    setList([...list,{id:count,value:inputValue,completed:false}]);
     setCount(count+1);
     setInputValue('');
     }
@@ -21,14 +21,21 @@ function App() {
   const handleDelete=(id)=>{
     setList(list.filter((item)=>item.id!==id));
   }
+  const handleCompleted=(id)=>{
+    setList(list.map((item)=>
+      item.id==id?{...item,completed: !item.completed}:item
+    ))
+  }
   return (
     <div>
      <input type="text" value={inputValue} onChange={handleChange}/>
      <button onClick={handleClick}>Add</button>
      <ul>
       {list.map((item)=>(
-        <li key={item.id}>{item.value}
+        <li key={item.id}>
+          <span style={{textDecoration: item.completed? 'line-through':'none'}}>{item.value}</span>
         <button onClick={()=>handleDelete(item.id)}>Delete</button>
+        <button onClick={()=>handleCompleted(item.id)}>mark completed</button>
         </li>
       )
       )}
