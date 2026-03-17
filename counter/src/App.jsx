@@ -4,42 +4,26 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import {Eye,EyeOff} from 'lucide-react'
 function App() {
-  const [inputValue,setInputValue]=useState('');
-  const[list,setList]=useState([]);
-  const [count,setCount]=useState(0);
-  const handleChange=(e)=>{
-    setInputValue(e.target.value);
-  }
-  const handleClick=()=>{
-    const isDuplicate=list.some((item)=>item.value.toLowerCase()===inputValue.trim().toLowerCase())
-    if(!isDuplicate && inputValue.trim()!==''){
-    setList([...list,{id:count,value:inputValue,completed:false}]);
-    setCount(count+1);
-    setInputValue('');
-    }
-  }
-  const handleDelete=(id)=>{
-    setList(list.filter((item)=>item.id!==id));
-  }
-  const handleCompleted=(id)=>{
-    setList(list.map((item)=>
-      item.id==id?{...item,completed: !item.completed}:item
-    ))
-  }
+   const users=["Anivesh","shashank","Aaditya","Somesh","Sheersh","Akshat","Arunangshu"];
+   const [searchTerm,setSearchTerm]=useState("");
+   const filteredUsers=users.filter((user)=>user.toLowerCase().includes(searchTerm.toLowerCase()));
   return (
     <div>
-     <input type="text" value={inputValue} onChange={handleChange}/>
-     <button onClick={handleClick}>Add</button>
-     <ul>
-      {list.map((item)=>(
-        <li key={item.id}>
-          <span style={{textDecoration: item.completed? 'line-through':'none'}}>{item.value}</span>
-        <button onClick={()=>handleDelete(item.id)}>Delete</button>
-        <button onClick={()=>handleCompleted(item.id)}>mark completed</button>
-        </li>
-      )
-      )}
-     </ul>
+       <input type="text" value={searchTerm} onChange={(e)=>setSearchTerm(e.target.value)}/>
+       <ul>
+        {
+          (filteredUsers.length>0)?
+          (filteredUsers.map((user,index)=>(
+            <li key={index}>
+            {user}
+            </li>
+          ))
+        )
+          : (<li>
+            <li>No users found</li>
+          </li>)
+        }
+       </ul>
     </div>
   )
 }
