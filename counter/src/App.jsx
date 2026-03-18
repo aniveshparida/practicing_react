@@ -1,29 +1,24 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-import {Eye,EyeOff} from 'lucide-react'
+import { Sun, Moon } from 'lucide-react' // Changed to Sun/Moon for theme context
+
 function App() {
-   const users=["Anivesh","shashank","Aaditya","Somesh","Sheersh","Akshat","Arunangshu"];
-   const [searchTerm,setSearchTerm]=useState("");
-   const filteredUsers=users.filter((user)=>user.toLowerCase().includes(searchTerm.toLowerCase()));
+  const [isDark, setIsDark] = useState(false);
+
+  const handleClick = () => {
+    setIsDark(!isDark);
+  }
+
   return (
-    <div>
-       <input type="text" value={searchTerm} onChange={(e)=>setSearchTerm(e.target.value)}/>
-       <ul>
-        {
-          (filteredUsers.length>0)?
-          (filteredUsers.map((user,index)=>(
-            <li key={index}>
-            {user}
-            </li>
-          ))
-        )
-          : (<li>
-            <li>No users found</li>
-          </li>)
-        }
-       </ul>
+    // Added a wrapper class 'app-wrapper' for layout
+    <div className={`app-wrapper ${isDark ? 'dark-theme' : 'light-theme'}`}>
+       <div className="card">
+         <h1>{isDark ? 'Dark Mode Active' : 'Light Mode Active'}</h1>
+         <button onClick={handleClick} className="toggle-btn">
+           {isDark ? <Sun size={20} /> : <Moon size={20} />}
+           <span>Switch to {isDark ? 'Light' : 'Dark'}</span>
+         </button>
+       </div>
     </div>
   )
 }
