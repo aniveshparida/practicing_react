@@ -2,32 +2,26 @@ import { useState } from 'react'
 import './App.css'
 import { Sun, Moon } from 'lucide-react' // Changed to Sun/Moon for theme context
 import {ChevronDown} from 'lucide-react'
+import Posts from './components/Posts'
+import Profile from './components/Profile'
+import Settings from './components/Settings'
 function App() {
-  const [isToggle,setToggle]=useState(false);
-   const handleToggle=()=>{
-    setToggle(!isToggle);
-   }
+  const [tab,setTab]=useState('Profile');
   return (
     <div>
-      <h1>what is react?</h1>
-      <button onClick={handleToggle}style={{
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            transition: 'transform 0.3s ease',
-            // Rotate the arrow 180 degrees when open
-            transform: isToggle ? 'rotate(180deg)' : 'rotate(0deg)'
-          }}><ChevronDown size={24}/></button>
-      {
-        isToggle && (
-          <div>
-             <h1>React is a library...</h1>
-          </div>
-        )
-      }
+      <nav>
+        <button onclick={()=>setTab('Posts')}><Posts/></button>
+     <button onClick={()=>setTab('Settings')}><Settings/></button>
+     <button onClick={()=>setTab('Profile')}><Profile/></button>
+     </nav>
+     <hr/>
+     <div>
+      {tab==='Profile' && <Profile/>}
+      {tab==='Posts' && <Posts/>}
+      {tab==='Settings' && <Settings/>}
+     </div>
     </div>
+
   )
 }
 
